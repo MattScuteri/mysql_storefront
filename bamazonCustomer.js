@@ -19,7 +19,10 @@ function showProducts() {
 	console.log("Available products: ");
 	connection.query("SELECT * FROM products", function(err, result) {
 		if (err) throw err;
-		console.log(result)
+		console.log("ID: " + result.item_id);
+		console.log("Product: " + result.product_name);
+		console.log("Price: " + result.price);
+		//Display IDs, names, prices
 		connection.end();
 	})
 }
