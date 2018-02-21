@@ -4,6 +4,7 @@ const connection = mysql.createConnection({
 	host: 'localhost',
 	port: 3306,
 	user: 'root',
+	password: 'root',
 	database: 'bamazonDB'
 });
 
@@ -18,7 +19,7 @@ function showProducts() {
 	console.log("Available products: ");
 	connection.query("SELECT * FROM products", function(err, result) {
 		if (err) throw err;
-		console.log(res)
+		console.log(result)
 		connection.end();
 	})
 }
