@@ -19,10 +19,15 @@ function showProducts() {
 	console.log("Available products: ");
 	connection.query("SELECT * FROM products", function(err, result) {
 		if (err) throw err;
-		console.log("ID: " + result.item_id);
-		console.log("Product: " + result.product_name);
-		console.log("Price: " + result.price);
-		//Display IDs, names, prices
+
+		// console.log(result)
+
+		const availableProducts = JSON.parse(result);
+
+		console.log("ID: " + availableProducts.RowDataPacket.item_id);
+		console.log("Product: " + availableProducts.RowDataPacket.product_name);
+		console.log("Price: " + availableProducts.RowDataPacket.price);
+		// Display IDs, names, prices
 		connection.end();
 	})
 }
