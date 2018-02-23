@@ -22,11 +22,11 @@ function showProducts() {
 
 		// console.log(result)
 
-		const availableProducts = JSON.parse(result);
-
-		console.log("ID: " + availableProducts.RowDataPacket.item_id);
-		console.log("Product: " + availableProducts.RowDataPacket.product_name);
-		console.log("Price: " + availableProducts.RowDataPacket.price);
+		//wrap in or each ad console log each item
+		
+		console.log("ID: " + result[1].item_id);
+		console.log("Product: " + result.RowDataPacket.product_name);
+		console.log("Price: " + result.RowDataPacket.price);
 		// Display IDs, names, prices
 		connection.end();
 	})
