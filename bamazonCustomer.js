@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const inquirer = require('inquirer');
 
 const connection = mysql.createConnection({
 	host: 'localhost',
@@ -13,6 +14,8 @@ connection.connect(function(err) {
 	console.log("connected to id " + connection.threadId + "\n");
 
 	showProducts();
+
+	promptUser();
 });
 
 function showProducts() {
@@ -29,6 +32,15 @@ function showProducts() {
 			console.log("---------------------------------")			
 		});
 		// Display IDs, names, prices
-		connection.end();
+	})
+}
+
+function promptUser() {
+	inquirer.prompt([{
+		name: "itemId",
+		message: "Please enter the ID of the item you wish to buy",
+		type: "input"
+	}]).then(function(response) {
+		
 	})
 }
