@@ -20,13 +20,14 @@ function showProducts() {
 	connection.query("SELECT * FROM products", function(err, result) {
 		if (err) throw err;
 
-		// console.log(result)
-
 		//wrap in or each ad console log each item
-		
-		console.log("ID: " + result[1].item_id);
-		console.log("Product: " + result.RowDataPacket.product_name);
-		console.log("Price: " + result.RowDataPacket.price);
+		result.forEach(function(result) {
+			console.log("---------------------------------")
+			console.log("Product: " + result.product_name);			
+			console.log("ID: " + result.item_id);
+			console.log("Price: " + result.price);
+			console.log("---------------------------------")			
+		});
 		// Display IDs, names, prices
 		connection.end();
 	})
