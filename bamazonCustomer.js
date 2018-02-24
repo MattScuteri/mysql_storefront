@@ -14,8 +14,6 @@ connection.connect(function(err) {
 	console.log("connected to id " + connection.threadId + "\n");
 
 	showProducts();
-
-	promptUser();
 });
 
 function showProducts() {
@@ -24,6 +22,8 @@ function showProducts() {
 		if (err) throw err;
 
 		//wrap in or each ad console log each item
+		// console.log(result);
+
 		result.forEach(function(result) {
 			console.log("---------------------------------")
 			console.log("Product: " + result.product_name);			
@@ -32,6 +32,7 @@ function showProducts() {
 			console.log("---------------------------------")			
 		});
 		// Display IDs, names, prices
+		promptUser();
 	})
 }
 
@@ -40,7 +41,28 @@ function promptUser() {
 		name: "itemId",
 		message: "Please enter the ID of the item you wish to buy",
 		type: "input"
+	}, {
+		name: "itemQuantity",
+		message: "How many would you like to buy?",
+		type: "input"
 	}]).then(function(response) {
-		
+		const query = "UPDATE products SET ? WHERE ?"
+
+		connection.query(query, function(err, result) {
+
+		if (err) throw err;
+
+		if (response.itemId[1] != result.item_id) {
+			console.log("Item not found!");
+		};
+
+		if (response.itemQuantity[1] <= result.stock_quantity) {
+			result.stock_quantity = result.stock_quantity - itemQuantity;
+			console.log("Order placed! Enjoy your food");
+		} else if (itemQuantity > result.stock_quantity) {
+			console.log("Insufficient quantity!");
+		}
+		connection.end();
+		})
 	})
 }
