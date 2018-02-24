@@ -46,7 +46,7 @@ function promptUser() {
 		message: "How many would you like to buy?",
 		type: "input"
 	}]).then(function(response) {
-		const query = "UPDATE products SET ? WHERE ?"
+		const query = "UPDATE products SET stock_quantity WHERE item_id=?"
 
 		connection.query(query, function(err, result) {
 
