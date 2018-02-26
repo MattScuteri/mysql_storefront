@@ -47,26 +47,25 @@ function promptUser() {
 		type: "input"
 	}]).then(function(response) {
 
-		console.log(response.itemId)
-		console.log(response.itemQuantity)
-
-
-		const query = "UPDATE products SET stock_quantity WHERE item_id = " + response.itemId;
-
-		connection.query(query, function(err, result) {
-
-		if (err) throw err;
-
-		if (response.itemId[1] != result.item_id) {
+		if (response.itemId != result.item_id) {
 			console.log("Item not found!");
 		};
 
-		if (response.itemQuantity[1] <= result.stock_quantity) {
+		if (response.itemQuantity <= result.stock_quantity) {
 			result.stock_quantity = result.stock_quantity - itemQuantity;
 			console.log("Order placed! Enjoy your food");
 		} else if (itemQuantity > result.stock_quantity) {
 			console.log("Insufficient quantity!");
 		}
+
+
+		const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
+		//store new data in variable and add to brackets in connection.query as in greatBay example
+		
+		connection.query(query, [response.itemId], function(err, result) {
+
+		if (err) throw err;
+
 		connection.end();
 		})
 	})
