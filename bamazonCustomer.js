@@ -42,30 +42,29 @@ function showProducts() {
  			type: "input"
  		}]).then(function(response) {
 
- 		if (response.itemId != result.item_id) {
- 			console.log("Item not found!");
- 		};
+ 			if (response.itemId != result[1].item_id) {
+ 				console.log("Item not found!");
+ 			} else if (response.itemQuantity <= result.stock_quantity) {
 
- 		let stockUpdate;
- 		if (response.itemQuantity <= result.stock_quantity) {
- 			result.stock_quantity = result.stock_quantity - response.itemQuantity;
+	 			let stockUpdate;
+ 				result.stock_quantity = result.stock_quantity - response.itemQuantity;
  			
- 			const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
+ 				const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
 
- 			connection.query(query, [stockUpdte: response.itemQuantity], function(err, result) {
+ 				connection.query(query, [{stockUpdate: response.itemQuantity}], function(err, result) {
 
- 				if (err) throw err;
- 				console.log("Order placed! Enjoy your food");
- 			})
+ 					if (err) throw err;
+ 					console.log("Order placed! Enjoy your food");
+ 				})
 
- 		} else if (response.itemQuantity > result.stock_quantity) {
- 			console.log("Insufficient quantity!");
- 		}
+ 			} else if (response.itemQuantity > result.stock_quantity) {
+ 				console.log("Insufficient quantity!");
+ 			}
 
- 		connection.end();
+ 			connection.end();
  		
+ 			})
  		})
- 	})
 }
 
 // function promptUser() {
