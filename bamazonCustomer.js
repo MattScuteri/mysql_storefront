@@ -32,41 +32,73 @@ function showProducts() {
 			console.log("---------------------------------")			
 		});
 		// Display IDs, names, prices
-		promptUser();
-	})
+		inquirer.prompt([{
+			name: "itemId",
+ 			message: "Please enter the ID of the item you wish to buy",
+ 			type: "input"
+ 		}, {
+ 			name: "itemQuantity",
+ 			message: "How many would you like to buy?",
+ 			type: "input"
+ 		}]).then(function(response) {
+
+ 		if (response.itemId != result.item_id) {
+ 			console.log("Item not found!");
+ 		};
+
+ 		let stockUpdate;
+ 		if (response.itemQuantity <= result.stock_quantity) {
+ 			result.stock_quantity = result.stock_quantity - response.itemQuantity;
+ 			
+ 			const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
+
+ 			connection.query(query, [stockUpdte: response.itemQuantity], function(err, result) {
+
+ 				if (err) throw err;
+ 				console.log("Order placed! Enjoy your food");
+ 			})
+
+ 		} else if (response.itemQuantity > result.stock_quantity) {
+ 			console.log("Insufficient quantity!");
+ 		}
+
+ 		connection.end();
+ 		
+ 		})
+ 	})
 }
 
-function promptUser() {
-	inquirer.prompt([{
-		name: "itemId",
-		message: "Please enter the ID of the item you wish to buy",
-		type: "input"
-	}, {
-		name: "itemQuantity",
-		message: "How many would you like to buy?",
-		type: "input"
-	}]).then(function(response) {
+// function promptUser() {
+// 	inquirer.prompt([{
+// 		name: "itemId",
+// 		message: "Please enter the ID of the item you wish to buy",
+// 		type: "input"
+// 	}, {
+// 		name: "itemQuantity",
+// 		message: "How many would you like to buy?",
+// 		type: "input"
+// 	}]).then(function(response) {
 
-		if (response.itemId != result.item_id) {
-			console.log("Item not found!");
-		};
+// 		if (response.itemId != result.item_id) {
+// 			console.log("Item not found!");
+// 		};
 
-		if (response.itemQuantity <= result.stock_quantity) {
-			result.stock_quantity = result.stock_quantity - itemQuantity;
-			console.log("Order placed! Enjoy your food");
-		} else if (itemQuantity > result.stock_quantity) {
-			console.log("Insufficient quantity!");
-		}
+// 		if (response.itemQuantity <= result.stock_quantity) {
+// 			result.stock_quantity = result.stock_quantity - itemQuantity;
+// 			console.log("Order placed! Enjoy your food");
+// 		} else if (itemQuantity > result.stock_quantity) {
+// 			console.log("Insufficient quantity!");
+// 		}
 
 
-		const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
-		//store new data in variable and add to brackets in connection.query as in greatBay example
-		
-		connection.query(query, [response.itemId], function(err, result) {
+// 		const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
+// 		//store new data in variable and add to brackets in connection.query as in greatBay example
 
-		if (err) throw err;
+// 		connection.query(query, [response.itemId], function(err, result) {
 
-		connection.end();
-		})
-	})
-}
+// 		if (err) throw err;
+
+// 		connection.end();
+// 		})
+// 	})
+// }
