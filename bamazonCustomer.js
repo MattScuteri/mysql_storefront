@@ -46,13 +46,12 @@ function promptUser() {
 		message: "How many would you like to buy?",
 		type: "input"
 	}]).then(function(response) {
-		console.log(response)
 
-		let parsedResponse = JSON.parse(response);
+		console.log(response.itemId)
+		console.log(response.itemQuantity)
 
-		console.log(parsedResponse);
 
-		const query = "UPDATE products SET stock_quantity = stock_quantity - " + parsedResponse.itemQuantity + " WHERE item_id = " + parsedResponse.itemId;
+		const query = "UPDATE products SET stock_quantity WHERE item_id = " + response.itemId;
 
 		connection.query(query, function(err, result) {
 
