@@ -47,12 +47,10 @@ function showProducts() {
  					console.log("Item not found!");
  				} else if (response.itemQuantity <= result[i].stock_quantity) {
 
-	 				let stockUpdate;
- 					result.stock_quantity = result.stock_quantity - response.itemQuantity;
- 			
- 					const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
+	 				let stockUpdate = result[i].stock_quantity - parseInt(response.itemQuantity);
+ 					const query = "UPDATE products SET stock_quantity=? WHERE item_id=?"
 
- 					connection.query(query, [{stockUpdate: response.itemQuantity}], function(err, result) {
+ 					connection.query(query, [stockUpdate, parseInt(response.itemId)], function(err, result) {
 
  						if (err) throw err;
  						console.log("Order placed! Enjoy your food");
