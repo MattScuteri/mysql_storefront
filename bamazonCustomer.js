@@ -41,10 +41,12 @@ function showProducts() {
  			message: "How many would you like to buy?",
  			type: "input"
  		}]).then(function(response) {
+ 			console.log(result)
 
  			for (let i = 0; i < result.length; i++) {
  				if (response.itemId != result[i].item_id) {
  					console.log("Item not found!");
+
  				} else if (response.itemQuantity <= result[i].stock_quantity) {
 
 	 				let stockUpdate = result[i].stock_quantity - parseInt(response.itemQuantity);
@@ -56,7 +58,7 @@ function showProducts() {
  						console.log("Order placed! Enjoy your food");
  					})
 
- 				} else if (response.itemQuantity > result.stock_quantity) {
+ 				} else if (response.itemQuantity > result[i].stock_quantity) {
  					console.log("Insufficient quantity!");
  				}
  			}
@@ -66,38 +68,3 @@ function showProducts() {
  			})
  		})
 }
-
-// function promptUser() {
-// 	inquirer.prompt([{
-// 		name: "itemId",
-// 		message: "Please enter the ID of the item you wish to buy",
-// 		type: "input"
-// 	}, {
-// 		name: "itemQuantity",
-// 		message: "How many would you like to buy?",
-// 		type: "input"
-// 	}]).then(function(response) {
-
-// 		if (response.itemId != result.item_id) {
-// 			console.log("Item not found!");
-// 		};
-
-// 		if (response.itemQuantity <= result.stock_quantity) {
-// 			result.stock_quantity = result.stock_quantity - itemQuantity;
-// 			console.log("Order placed! Enjoy your food");
-// 		} else if (itemQuantity > result.stock_quantity) {
-// 			console.log("Insufficient quantity!");
-// 		}
-
-
-// 		const query = "UPDATE products SET stock_quantity ? WHERE item_id ?"
-// 		//store new data in variable and add to brackets in connection.query as in greatBay example
-
-// 		connection.query(query, [response.itemId], function(err, result) {
-
-// 		if (err) throw err;
-
-// 		connection.end();
-// 		})
-// 	})
-// }
